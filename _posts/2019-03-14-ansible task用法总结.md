@@ -29,6 +29,7 @@ author: 大可
           ```
           
         - listen:如果想要一次触发多个handlers，那么需要使用listen来触发一个topic的所有handler
+          
           ```
           handlers:
             - name: restart memcached
@@ -55,15 +56,15 @@ author: 大可
       ```
         - name: non optimal yum, not only slower but might cause issues with interdependencies
           yum:
-              name: "{{item}}"
+              name: "\{\{item\}\}"
               state: present
-          loop: "{{list_of_packages}}"
+          loop: "\{\{list_of_packages\}\}"
       ```
           
     - when与loop结合使用，对loop中的每一个元素执行判断when条件
     
       ```
-        - command: echo {{ item }}
+        - command: echo \{\{ item \}\}
           loop: [ 0, 2, 4, 6, 8, 10 ]
           when: item > 5
       ```
@@ -104,7 +105,7 @@ author: 大可
     - register & loop：当同时使用loop和register时，那么变量中将包括一个result字段，包含每一次循环结果的列表（https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#using-register-with-a-loop）
       
       ```
-        - shell: "echo {{ item }}"
+        - shell: "echo \{\{ item \}\}"
           loop:
               - "one"
               - "two"
@@ -117,7 +118,7 @@ author: 大可
       - name: Install Apache
         block:
           - yum:
-              name: "{{ item }}"
+              name: "\{\{ item \}\}"
               state: installed
             with_items:
               - httpd
@@ -183,14 +184,14 @@ author: 大可
         ```
         - name: with_list
           debug:
-              msg: "{{ item }}"
+              msg: "\{\{ item \}\}"
           with_list:
               - one
               - two
 
         - name: with_list -> loop
           debug:
-              msg: "{{ item }}"
+              msg: "\{\{ item \}\}"
           loop:
               - one
               - two
@@ -201,13 +202,13 @@ author: 大可
         ```
         - name: with_items
           debug:
-              msg: "{{ item }}"
-          with_items: "{{ items }}"
+              msg: "\{\{ item \}\}"
+          with_items: "\{\{ items \}\}"
 
         - name: with_items -> loop
           debug:
-              msg: "{{ item }}"
-          loop: "{{ items|flatten(levels=1) }}"
+              msg: "\{\{ item \}\}"
+          loop: "\{\{ items|flatten(levels=1) \}\}"
         ```
         
  - templates
