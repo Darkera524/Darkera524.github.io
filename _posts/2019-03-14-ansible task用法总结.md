@@ -26,6 +26,7 @@ author: 大可
                   - restart memcached
                   - restart apache
           ```
+          
         - listen:如果想要一次触发多个handlers，那么需要使用listen来触发一个topic的所有handler
             - ```
               handlers:
@@ -45,6 +46,7 @@ author: 大可
                     command: echo "this task will restart the web services"
                     notify: "restart web services"
               ```
+              
     - when（https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html#the-when-statement）: 触发条件，可以在不添加双花括号的情况下直接调用variable
         - commonly used facts(https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html#commonly-used-facts)
     - loop
@@ -55,12 +57,14 @@ author: 大可
                   state: present
               loop: "{{list_of_packages}}"
           ```
+          
     - when与loop结合使用，对loop中的每一个元素执行判断when条件
         - ```
             - command: echo {{ item }}
               loop: [ 0, 2, 4, 6, 8, 10 ]
               when: item > 5
           ```
+          
     - ignore_errors:忽略本次task执行失败
     - register:result（保存本次执行结果状态，用以跳转不同condition task）
         - when: result is failed
@@ -80,8 +84,8 @@ author: 大可
 
             - command: /bin/still/something_else
               when: result is skipped
-
           ```
+          
     - until & retry:重复执行一个任务，直到达到指定条件（https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#do-until-loops）
         - If the until parameter isn’t defined, the value for the retries parameter is forced to 1.
         - ```
@@ -91,6 +95,7 @@ author: 大可
             retries: 5
             delay: 10
           ```
+          
     - register & loop：当同时使用loop和register时，那么变量中将包括一个result字段，包含每一次循环结果的列表（https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#using-register-with-a-loop）
         - ```
             - shell: "echo {{ item }}"
@@ -99,6 +104,7 @@ author: 大可
                   - "two"
               register: echo
           ```
+          
     - block:是由一系列task组成的逻辑组，绝大多数可以应用到task的操作均可应用到block，可以看作是一个大型的task，或者说是多继承了task的task，每个针对block的操作会应用到其所继承的每一个task，添加到每一个task的上下文中(https://docs.ansible.com/ansible/latest/user_guide/playbooks_blocks.html)
         - ```
           - name: Install Apache
@@ -120,6 +126,7 @@ author: 大可
             become: true
             become_user: root
           ```
+          
     - rescue:差错处理，block仅处理状态为failed的task，对于task定义错误、未定义变量错误或者不可达主机等错误是不处理的
         - ```
           - name: Handle the error
@@ -134,6 +141,7 @@ author: 大可
               - debug:
                   msg: 'I caught an error, can do stuff here to fix it, :-)'
           ```
+          
     - always:该部分会执行无论block执行结果如何
         - ```
           - name: Attempt and graceful roll back demo
@@ -155,6 +163,7 @@ author: 大可
               - debug:
                 msg: "This always executes"
           ```
+          
     - become:权限升级，如某task需要以root权限执行（https://docs.ansible.com/ansible/latest/user_guide/become.html#id1）
         - become:yes
     - tags:用以只执行指定的一部分任务而不是执行每一件任务（https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html）
@@ -176,6 +185,7 @@ author: 大可
               - one
               - two
         ```
+        
         - with_items
         ```
         - name: with_items
@@ -188,6 +198,7 @@ author: 大可
               msg: "{{ item }}"
           loop: "{{ items|flatten(levels=1) }}"
         ```
+        
  - templates
     - some operation
     
