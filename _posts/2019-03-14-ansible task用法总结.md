@@ -2,7 +2,7 @@
 layout: post
 title:  "ansible task用法总结"
 categories: ansible
-tags: ansible note
+tags: ansible
 author: 大可
 ---
 
