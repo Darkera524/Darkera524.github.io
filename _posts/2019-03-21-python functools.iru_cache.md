@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "python functools_iru_cache"
+title:  "python functools.iru_cache"
 categories: python
 tags: python python-method std-module
 author: 大可
