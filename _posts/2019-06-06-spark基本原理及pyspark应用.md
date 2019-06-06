@@ -73,6 +73,7 @@ author: 大可
     - 另一方面，惰性评估计算使用了有向无环图的机制，在计算时，如果有针对同一RDD的不同操作，不必读取该RDD多次，仅在一次读取过程中完成两个操作，提高了计算效率
 - 惰性评估的容错考究
     - 因为每个Transformation的结果都是RDD，再加上有向无环图的特性，RDD本身维护了本身的依赖，故当一个partition失效时，RDD拥有足够的信息来重新计算，同时该计算可以并行来使恢复过程更快
+
 ##### RDDs持久化管理
 - Saprk提供了三种持久化管理的选项：内存存储反序列化数据、内存存储序列化数据、磁盘存储
     - 内存存储反序列化数据是最直接且存储最快的方式，因为省去了序列化数据的开销，但是并不是最高效的方式，要求数据被存储为objects的形式
@@ -86,6 +87,7 @@ author: 大可
 - PySpark内的使用：
     - [RDD持久化](#rdd_persist)
     - [DataFrame持久化](#dataframe_persist)
+
 ##### RDD的逻辑组成
 - Spark使用五个主要的属性去表示RDD
     - 其中三个必须的属性为组成RDD的partition对象列表、为每一个partition计算iterator的function、所依赖其他RDD的列表
@@ -98,6 +100,7 @@ author: 大可
     - 如果在元素与分区之间存在关联时将返回partitioner对象的类型，如hashPartitioner
         - 所谓的关联指并非表示为key/value（tuple）的对象
     - perferredLocations(p) 返回关于partition p的数据本地化信息。特别的，该方法返回能代表p被分布存储的每个node的字符串列表，如RDD表示HDFS file时，每个字符串代表分区被存储的节点的hadoop name
+
 #### DataFrames
 - 是一种不可变的分布式数据库，这种数据集被组织成指定的列，类似于关系型数据库的表
 - 通过在分布式数据集上施加结构，让Spark用户利用Spark SQL来查询结构化数据或者使用Spark表达式方法
@@ -117,6 +120,7 @@ author: 大可
         - 触发器：实时监测行为或者异常，触发下游动作
         - 数据浓缩：结合流数据和其他数据集，进行更为丰富的分析
         - 复杂会话和持续学习：持续更新机器学习模型
+
 #### Job_Stage_Task
 ![app_tree](/assets/app_tree.png)
 - Job
@@ -136,6 +140,7 @@ author: 大可
     - 在计算的时候，每个分区会起一个task，所以RDD分区数目决定了task数目
 - DAG
     - Spark的高阶调度层使用RDD之间的依赖来为每一个Job建立Stages的Graph
+
 #### DataSet
 - 旨在提供给用户一种轻松转换对象的方式，由于其强制类型指定及python弱类型的特性加上pythonic的规范，python暂不支持
 
@@ -399,6 +404,7 @@ spark.persist(StorageLevel.MEMORY_AND_DISK)
 - 重复数据、缺失值、离群值检测
 
 #### SparkStreaming
+
 ##### 非全局聚合（无状态流处理）
 ```python
 from pyspark import SparkContext
