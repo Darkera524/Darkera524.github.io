@@ -445,6 +445,7 @@ ssc.awaitTermination()
     - 可以通过mapWithState创建全局聚合
 
 - 修改上一节为全局聚合如下
+
 ```python
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
@@ -572,6 +573,7 @@ newlines.show()
 ##### pandas_udf-Scalar
 pandas_udf装饰器使得plus_one函数接受一个pandas.Series参数，也返回一个pandas.Series对象
 - plus_one
+
 ```python
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import pandas_udf, PandasUDFType
@@ -590,6 +592,7 @@ newlines = lines.withColumn("v2", plus_one(lines.v))
 newlines.show()
 ```
 - Cumulative Probability
+
 ```python
 import pandas as pd
 from scipy import stats
@@ -611,6 +614,7 @@ newlines.show()
 
 ##### pandas_udf-grouped-map
 对某个组的所有元素（map）执行某个操作
+
 ```python
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import pandas_udf, PandasUDFType
@@ -630,6 +634,7 @@ newlines.show()
 
 ##### pandas_udf-grouped-aggregate
 定义了聚合一到多个pandas.Series到一个Scalar值的装饰器
+
 ```python
 from pyspark.sql import SparkSession, Window
 from pyspark.sql.functions import pandas_udf, PandasUDFType
