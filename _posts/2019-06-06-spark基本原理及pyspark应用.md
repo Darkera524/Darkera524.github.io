@@ -118,7 +118,7 @@ author: 大可
         - 数据浓缩：结合流数据和其他数据集，进行更为丰富的分析
         - 复杂会话和持续学习：持续更新机器学习模型
 #### Job_Stage_Task
-![app_tree](app_tree.png)
+![app_tree](/assets/app_tree.png)
 - Job
     - job间顺序执行
     - 在遇到action 算子（即操作，对比于转换）的时候会提交一个Job
@@ -126,9 +126,9 @@ author: 大可
     - stage间顺序执行
     - 在tranform算子（即转换，对比于操作）中，会分为两种情况
         - 如果子partition拥有明确的父partition而与父partitions中的数据无关，即为narrow dependency（如map、filter、mapPartitions、flatMap）  
-        ![narrow_dp](narrow_dp.png)
+        ![narrow_dp](/assets/narrow_dp.png)
         - 如果子partition并不拥有明确的父partition，以来的partition取决于父partition中存在的值，即为wide dependency。也称为shuffle依赖（如groupByKey、reduceByKey、sortByKey）
-        ![wide_dp](wide_dp.png)  
+        ![wide_dp](/assets/wide_dp.png)
         - join相对比较复杂，因为该操作究竟是narrow dependency还是wide dependency取决于两个父RRDs是如何分区的
     - job的stage划分便是根据shuffle依赖进行的，为两个stage的分界
 - Task
@@ -141,7 +141,7 @@ author: 大可
 
 ### Catalyst优化器
 优化逻辑,接收query plan，然后将其转换为执行计划，使得Spark SQL执行快速
-![Cost_Optimizer](Cost_Optimizer.png)
+![Cost_Optimizer](/assets/Cost_Optimizer.png)
 
 ### Spark_job调度
 - 一个Spark cluster可能并发执行多个Spark Applications
@@ -152,7 +152,7 @@ author: 大可
 - 动态分配，根据需要增加和去除executor，借助启发式资源预估
 
 #### Spark应用分配过程
-![job_schedule](job_schedule.png)
+![job_schedule](/assets/job_schedule.png)
 图中表示了当SparkContext start时的情形。首先driver程序ping cluster manager，cluster manager在nodes中启动一些Spark executors（图中黑色方形），一个node可以拥有多个executor，但是一个executor不能分布在不同node（蓝色圈圈）。一个RDD将被评估分布在不同的partition（红色椭圆），每一个executor可以有多个partition，但是一个partition不能跨越多个executor
 
 - 默认地，Spark以先进先出调度jobs。然而Spark也提供了一种公平的调度方式，为每一个job分配一些tasks直到所有的job完成，这保证了每一个job都能获得集群资源的一部分。随后Spark application按顺序启动任务，然后actions被在SparkContext上触发
@@ -676,7 +676,7 @@ df.withColumn('mean_v', mean_udf(df['v']).over(w)).show()
 ### 学习过程的其他疑问question
 - Spark与MapReduce本质算法区别？ TODO
 - PySpark性能缺陷
-    - PySpark与RDD通信模型![PySpark_RDD_communicate](PySpark_RDD_communicate.png)
+    - PySpark与RDD通信模型![PySpark_RDD_communicate](/assets/PySpark_RDD_communicate.png)
     - PySpark task是如何分发的？ TODO
     - 什么影响了PySpark的性能
         - 数据从Spark worker序列化并且管道传输到Python Worker，设计JVM和Py4J上下文切换
